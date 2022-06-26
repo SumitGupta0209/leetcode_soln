@@ -14,25 +14,26 @@
  * }
  */
 class Solution {
-	public List<String> binaryTreePaths(TreeNode root) {
-		List<String> res = new ArrayList<String>();
-		return path(root, "", res);
-	}
-
-	public List<String> path(TreeNode root, String curr, List<String> res){
-		curr+=String.valueOf(root.val);
-		if(root.right == null && root.left == null){
-			res.add(curr);
-			return res;
-		}
-		else if(root.right == null) path(root.left, curr + "->", res);
-		else if(root.left == null) path(root.right, curr + "->", res);
-		else if(root.right == null) path(root.left, curr + "->", res);
-		else{
-			path(root.left, curr + "->", res);
-			path(root.right, curr + "->", res);
-		}
-		return res;
-	}
-
+    List<String> res = new ArrayList<>();
+    
+    public List<String> binaryTreePaths(TreeNode root) {
+        helper(root, new StringBuilder());
+        return res;
+    }
+    
+    public void helper(TreeNode node, StringBuilder sb) {
+        if (node == null) return;
+        int len = sb.length();
+        sb.append(node.val);
+        
+        if (node.left == null && node.right == null) {
+            res.add(sb.toString());
+        } else {
+            sb.append("->");
+            helper(node.left, sb);
+            helper(node.right, sb);
+        }
+        // deleting the extra characters we added
+        sb.setLength(len);
+    }
 }
