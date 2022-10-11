@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 //Initial Template for Java
 
 import java.util.*;
@@ -10,6 +10,7 @@ class GFG
     public static void main(String args[])throws IOException
     {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); 
+        PrintWriter out=new PrintWriter(System.out);
         
         //taking testcases
         int t = Integer.parseInt(br.readLine()); 
@@ -22,59 +23,59 @@ class GFG
     		Stack<Integer> stack=new Stack<>();
     		String str1=br.readLine();
     		String[] starr1=str1.split(" ");
-    		
     		//inserting elements in the array
     		for(int j=0;j<n;j++)
     		{
-    		  stack.push(Integer.parseInt(starr1[j]));
+    		    stack.push(Integer.parseInt(starr1[j]));
     		}
-    		//calling rotateArr() function
-            ArrayList<Integer> res=Solution.reverse(stack);
-            for(int ii=0;ii<res.size();ii++){
-                System.out.print(res.get(ii));
-                if(ii!=res.size()-1){
-                    System.out.print(" ");
-                }
+    		//calling reverse() function
+            Solution.reverse(stack);
+            for(int j:stack){
+                out.print(j+" ");
             }
-            System.out.println();
+            out.println();
          }
+         out.close();
     }
-}// } Driver Code Ends
+}
+// } Driver Code Ends
 
 
 //User function Template for Java
 
-class Solution{
-    static void insert_at_bottom(Stack<Integer> s, int x){
-        if(s.size()==0){
-            s.add(x);
-        }
-        else{
-            int y= s.peek();
-            s.pop();
-            insert_at_bottom(s, x);
-            s.add(y);
-        }
-    }
-    static void fun(Stack<Integer> s){
-        if(s.size()>0){
-            int x=s.peek();
-            s.pop();
-            fun(s);
-            insert_at_bottom(s, x);
-        }
-    }
-    static ArrayList<Integer> reverse(Stack<Integer> s)
+class Solution
+{ 
+    static void reverse(Stack<Integer> s)
     {
         // add your code here
-        fun(s);
-        ArrayList<Integer> ans = new ArrayList<>();
-        while(!s.isEmpty()){
-            ans.add(s.peek());
-            s.pop();
+        if(s.size()==0)
+        {
+            return;
         }
-        Collections.reverse(ans);
-        return ans;
+        
+        int val=s.pop();
+        reverse(s);
+        f(s,val);
+        
+        
+        
     }
-
+    public static void f(Stack<Integer>s,int val)
+    {
+        
+        Stack<Integer>st=new Stack<>();
+        while(s.size()!=0)
+        {
+            st.push(s.pop());
+        }
+        s.push(val);
+        while(st.size()!=0)
+        {
+            s.push(st.pop());
+        }
+        
+        
+        
+        
+    }
 }
